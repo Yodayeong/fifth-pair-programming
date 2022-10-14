@@ -40,3 +40,9 @@ def login(request):
     }
     return render(request, 'accounts/login.html', context)
 
+def detail(request, user_pk):
+    user = get_user_model().objects.get(id=user_pk)
+    context = {
+        'user': user
+    }
+    return render(request, 'accounts/detail.html', context)
