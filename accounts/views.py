@@ -47,12 +47,15 @@ def detail(request, user_pk):
     return render(request, 'accounts/detail.html', context)
 
 @login_required
-def update(request):
+def update(request, user_pk):
     if request.method == 'POST':
-        form = CustomUserChangeForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('accounts:detail', request.user.pk)
+        if request.user.pk == user_pk:
+            form = CustomUserChangeForm(request.POST, instance=request.user)
+            if form.is_valid():
+                form.save()
+                return redirect('accounts:detail', request.user.pk)
+        else:
+            return redirect('accounts:index')
     else:
         form = CustomUserChangeForm(instance=request.user)
     context = {
@@ -63,3 +66,5 @@ def update(request):
 def logout(request):
     auth_logout(request)
     return redirect('accounts:index')
+
+#def password(request):

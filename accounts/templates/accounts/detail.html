@@ -2,16 +2,19 @@
 
 {% block content %}
 
-  <h1>{{ user.username }}
+    <h1>{{ user.username }}
     님의 프로필</h1>
 
-  <p>이름 :
+    <p>이름 :
     {{ user.full_name }}</p>
-  <p>가입날짜 :
+    <p>가입날짜 :
     {{ user.date_joined }}</p>
-  <p>이메일 :
+    <p>이메일 :
     {{ user.email }}</p>
 
-  <a href="{% url 'accounts:update' %}" class="btn btn-primary">수정하기</a>
+    {% if request.user == user %}
+        <a href="{% url 'accounts:update' user.pk %}" class="btn btn-primary">수정하기</a>
+    {% endif %}
+
 
 {% endblock %}
